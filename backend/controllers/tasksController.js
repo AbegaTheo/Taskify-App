@@ -76,7 +76,7 @@ const getTaskById = async (req, res) => {
   }
 };
 
-// @desc    Créer une nouvelle tâche
+// @desc    🆕 Créer une nouvelle tâche
 // @route   POST /api/tasks
 // @access  Private
 const createTask = async (req, res) => {
@@ -125,7 +125,7 @@ const createTask = async (req, res) => {
   }
 };
 
-// @desc    Mettre à jour une tâche
+// @desc    🔄 Mettre à jour une tâche
 // @route   PUT /api/tasks/:id
 // @access  Private
 const updateTask = async (req, res) => {
@@ -177,7 +177,7 @@ const updateTask = async (req, res) => {
   }
 };
 
-// @desc    Supprimer une tâche
+// @desc    🗑️ Supprimer une tâche
 // @route   DELETE /api/tasks/:id
 // @access  Private
 const deleteTask = async (req, res) => {
