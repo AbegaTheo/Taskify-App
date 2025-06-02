@@ -1,0 +1,15 @@
+# Ignore les dépendances du backend
+/backend/node_modules/
+
+# Ignore les fichiers d'environnement du backend (clé secrète, URI MongoDB...)
+/backend/.env
+
+# Ignore les fichiers log temporaires
+*.log
+
+# Ignore le dossier dist de build du backend
+/backend/dist/
+
+# Ignore les fichiers système
+.DS_Store
+Thumbs.db
