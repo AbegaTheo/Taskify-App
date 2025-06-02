@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const colors = require("colors");
 const TasksRoutes = require("./routes/TasksRoutes");
+const AuthRoutes = require("./routes/AuthRoutes");
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/tasks", TasksRoutes);
+app.use("/api/auth", AuthRoutes);
 
 // Connexion à la base de données MongoDB
 mongoose.connect(process.env.MONGODB_URI, {

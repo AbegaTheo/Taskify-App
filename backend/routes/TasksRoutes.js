@@ -1,6 +1,7 @@
 const  express = require("express");
 const router = express.Router();
 const Tasks = require("../models/Tasks");
+const { protect } = require("../middleware/authMiddleware");
 
 // Route GET pour récupérer toutes les tâches
 router.get("/tasks", async (req, res) => {
@@ -11,6 +12,15 @@ router.get("/tasks", async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Une erreur s'est produite lors de la recherche des tâches." });
   }
+});
+
+// route de test
+router.get("/tasks/test", (req, res) => {
+  res.send("API est en ligne ✅!");
+});
+
+router.get('/', protect, (req, res) => {
+  res.json({ message: `Bienvenue ${req.user.username}, voici vos tâches.` });
 });
 
 // Route POST pour créer une nouvelle tâche

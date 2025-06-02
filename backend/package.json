@@ -1,5 +1,6 @@
 {
-  "name": "backend",
+  "name": "Taskify-App-backend",
+  "description": "Backend API pour l'application Taskify avec authentification JWT",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
@@ -7,15 +8,26 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "Taskify",
+    "Taskify-App",
+    "Taskify-App-backend",
+    "Taskify-App-Backend",
+    "nodejs",
+    "express",
+    "mongodb",
+    "jwt",
+    "authentication"
+  ],
+  "author": "Abel AGOH",
+  "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.15.1"
   },
   "devDependencies": {
