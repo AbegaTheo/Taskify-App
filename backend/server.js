@@ -25,7 +25,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
-  console.log("✅ Connexion à MongoDB Réussie !".green.bold);
+  console.log("✅ Connexion à MongoDB Réussie !".green.bold.italic);
 }).catch((error) => {
   console.error("❌ Erreur lors de la connexion à MongoDB :".red.bold, error);
 });
@@ -33,5 +33,5 @@ mongoose.connect(process.env.MONGODB_URI, {
 // Lancement du serveur
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
-  console.log(`✅ Serveur en ligne sur le port http://localhost:${port}`);
+  console.log(`✅ Serveur en ligne sur le port http://localhost:${port}`.cyan.bold.italic);
 });
