@@ -2,6 +2,12 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode, useCallback } from "react";
 import axios from "axios";
 
+// Détection dynamique de l'environnement
+const isProduction = window.location.hostname.includes("render.com");
+const API_URL = isProduction
+  ? "https://taskify-backend-6dkg.onrender.com/api"
+  : "http://localhost:5000/api";
+
 // Définition du type de User
 export interface User {
   _id: string;
@@ -92,7 +98,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       console.log("🔐 Tentative de connexion pour:", email);
       
-      const res = await axios.post("http://localhost:5000/api/auth/login", { 
+      const res = await axios.post(`${API_URL}/auth/login`, { 
         email, 
         password 
       });
@@ -139,7 +145,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       console.log("🔄 Inscription en cours...", { username, email });
       
-      const res = await axios.post("http://localhost:5000/api/auth/register", { 
+      const res = await axios.post(`${API_URL}/auth/register`, { 
         username, 
         email, 
         password, 

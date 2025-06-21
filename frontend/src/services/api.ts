@@ -1,8 +1,12 @@
 // src/services/api.ts
 import axios from "axios";
 
+const isProd = window.location.hostname.includes("render.com");
+
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: isProd
+    ? "https://taskify-backend-6dkg.onrender.com/api"
+    : "http://localhost:5000/api",
   withCredentials: true,
 });
 

@@ -8,6 +8,12 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { Task } from '../types/Task';
 
+// 🔧 Détection de l'environnement pour l'API
+const isProduction = window.location.hostname.includes("render.com");
+const API_URL = isProduction
+  ? "https://taskify-backend-6dkg.onrender.com/api"
+  : "http://localhost:5000/api";
+
 const Dashboard: React.FC = () => {
   const { user, token, isAuthenticated } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -42,7 +48,7 @@ const Dashboard: React.FC = () => {
     try {
       console.log("🔄 Chargement des tâches...");
       
-      const response = await axios.get('http://localhost:5000/api/tasks', getAxiosConfig());
+      const response = await axios.get(`${API_URL}/tasks`, getAxiosConfig());
       
       console.log("✅ Tâches récupérées:", response.data);
       
@@ -72,7 +78,7 @@ const Dashboard: React.FC = () => {
     try {
       console.log("🔄 Filtrage des tâches...", filters);
       
-      const response = await axios.get('http://localhost:5000/api/tasks/filter', {
+      const response = await axios.get(`${API_URL}/tasks/filter`, {
         ...getAxiosConfig(),
         params: filters
       });
@@ -146,7 +152,7 @@ const Dashboard: React.FC = () => {
       console.log("🔄 Création d'une nouvelle tâche...", taskData);
       
       const response = await axios.post(
-        'http://localhost:5000/api/tasks',
+        `${API_URL}/tasks`,
         taskData,
         getAxiosConfig()
       );
@@ -167,7 +173,7 @@ const Dashboard: React.FC = () => {
       console.log("🔄 Modification de la tâche...", { taskId, updatedData });
       
       const response = await axios.put(
-        `http://localhost:5000/api/tasks/${taskId}`,
+        `${API_URL}/tasks/${taskId}`,
         updatedData,
         getAxiosConfig()
       );
@@ -187,7 +193,7 @@ const Dashboard: React.FC = () => {
     try {
       console.log("🔄 Suppression de la tâche...", taskId);
       
-      await axios.delete(`http://localhost:5000/api/tasks/${taskId}`, getAxiosConfig());
+      await axios.delete(`${API_URL}/tasks/${taskId}`, getAxiosConfig());
       
       setTasks(prev => prev.filter(task => task._id !== taskId));
       console.log("✅ Tâche supprimée:", taskId);
@@ -204,7 +210,7 @@ const Dashboard: React.FC = () => {
       console.log("🔄 Changement de statut...", { taskId, newStatus });
       
       const response = await axios.put(
-        `http://localhost:5000/api/tasks/${taskId}`,
+        `${API_URL}/tasks/${taskId}`,
         { status: newStatus },
         getAxiosConfig()
       );

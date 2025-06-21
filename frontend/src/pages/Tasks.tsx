@@ -8,6 +8,12 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { Task } from '../types/Task';
 
+// 🔧 Détection de l'environnement pour l'API
+const isProduction = window.location.hostname.includes("render.com");
+const API_URL = isProduction
+  ? "https://taskify-backend-6dkg.onrender.com/api"
+  : "http://localhost:5000/api";
+
 const Tasks: React.FC = () => {
   const { token, isAuthenticated } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -31,7 +37,7 @@ const Tasks: React.FC = () => {
     }
   }), [token]);
 
-  // ✅ Fonction pour récupérer les tâches
+  //* ✅ Fonction pour récupérer les tâches
   const fetchTasks = useCallback(async () => {
     if (!token || !isAuthenticated) {
       console.log("❌ Pas de token ou utilisateur non authentifié");
@@ -44,7 +50,7 @@ const Tasks: React.FC = () => {
     try {
       console.log("🔄 Chargement des tâches...");
       
-      const response = await axios.get('http://localhost:5000/api/tasks', getAxiosConfig());
+      const response = await axios.get(`${API_URL}/tasks`, getAxiosConfig());
       
       console.log("✅ Tâches récupérées:", response.data);
       
@@ -67,7 +73,7 @@ const Tasks: React.FC = () => {
     }
   }, [token, isAuthenticated, getAxiosConfig]);
 
-  // ✅ Fonction pour filtrer et trier les tâches
+  //* ✅ Fonction pour filtrer et trier les tâches
   const applyFiltersAndSort = useCallback(() => {
     let filtered = [...tasks];
     
@@ -134,13 +140,13 @@ const Tasks: React.FC = () => {
     applyFiltersAndSort();
   }, [applyFiltersAndSort]);
 
-  // ✅ Ajouter une nouvelle tâche
+  //* ✅ Ajouter une nouvelle tâche
   const handleAddTask = async (taskData: Omit<Task, '_id'>) => {
     try {
       console.log("🔄 Création d'une nouvelle tâche...", taskData);
       
       const response = await axios.post(
-        'http://localhost:5000/api/tasks',
+        `${API_URL}/tasks`,
         taskData,
         getAxiosConfig()
       );
@@ -155,13 +161,13 @@ const Tasks: React.FC = () => {
     }
   };
 
-  // ✅ Modifier une tâche
+  //* ✅ Modifier une tâche
   const handleEditTask = async (taskId: string, updatedData: Partial<Task>) => {
     try {
       console.log("🔄 Modification de la tâche...", { taskId, updatedData });
       
       const response = await axios.put(
-        `http://localhost:5000/api/tasks/${taskId}`,
+        `${API_URL}/tasks/${taskId}`,
         updatedData,
         getAxiosConfig()
       );
@@ -176,12 +182,12 @@ const Tasks: React.FC = () => {
     }
   };
 
-  // ✅ Supprimer une tâche
+  //* ✅ Supprimer une tâche
   const handleDeleteTask = async (taskId: string) => {
     try {
       console.log("🔄 Suppression de la tâche...", taskId);
       
-      await axios.delete(`http://localhost:5000/api/tasks/${taskId}`, getAxiosConfig());
+      await axios.delete(`${API_URL}/tasks/${taskId}`, getAxiosConfig());
       
       setTasks(prev => prev.filter(task => task._id !== taskId));
       console.log("✅ Tâche supprimée:", taskId);
@@ -192,13 +198,13 @@ const Tasks: React.FC = () => {
     }
   };
 
-  // ✅ Changer le statut d'une tâche
+  //* ✅ Changer le statut d'une tâche
   const handleToggleStatus = async (taskId: string, newStatus: Task["status"]) => {
     try {
       console.log("🔄 Changement de statut...", { taskId, newStatus });
       
       const response = await axios.put(
-        `http://localhost:5000/api/tasks/${taskId}`,
+        `${API_URL}/tasks/${taskId}`,
         { status: newStatus },
         getAxiosConfig()
       );
