@@ -2,7 +2,7 @@ import React from "react";
 import { Edit, Delete, CheckCircle } from "@mui/icons-material";
 import { Task } from "../types/Task"; // 💡 Assure-toi que le chemin est correct
 import { NavLink } from "react-router-dom";
-import "./RecentsTask.css";
+import "./Styles/RecentsTask.css";
 import TaskIcon from "@mui/icons-material/Task";
 
 interface Props {

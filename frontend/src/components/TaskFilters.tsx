@@ -1,6 +1,6 @@
 // src/components/TaskFilters.tsx
 import React from 'react';
-import './TaskFilters.css';
+import './Styles/TaskFilters.css';
 import SearchIcon from '@mui/icons-material/Search';
 
 interface TaskFiltersProps {

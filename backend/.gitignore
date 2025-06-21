@@ -1,0 +1,8 @@
+#Ignore le fichier environnement
+.env
+
+#Ignore les fichiers de logs
+*.log
+
+#Ignore le fichier de Tests
+test.js
