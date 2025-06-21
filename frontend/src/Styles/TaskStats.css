@@ -1,0 +1,43 @@
+.task-stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  flex: 1;
+  min-width: 200px;
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  display: block;
+  align-items: center;
+  gap: 1rem;
+}
+
+.stat-box h3 {
+  font-size: 3.2rem;
+}
+
+.completed {
+  color: #00c853;
+}
+
+.inProgress {
+  color: #2196f3;
+}
+
+.total {
+  color: #9c27b0;
+}
+
+.priority {
+  color: #f44336;
+}
+
+.stat-box p {
+  font-size: 1.3rem;
+  font-weight: 200;
+  color: #4a4a4a;
+}

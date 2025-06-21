@@ -1,23 +1,23 @@
-const Users = require("../models/Users");
-const generateToken = require("../utils/generateToken");
-const bcrypt = require("bcryptjs");
+import Users from '../models/Users.js'; 
+import generateToken from '../utils/generateToken.js';
+import bcrypt from 'bcryptjs';
 
 // Fonction pour créer un nouvel utilisateur
 // @route POST /api/auth/register
 // @access Public
-exports.registerUser = async (req, res) => {
+const registerUser = async (req, res) => {
+  const { username, email, password, confirmPassword } = req.body;
+  
   try {
-    const { username, email, password, confirmPassword } = req.body;
-
     // Vérification des champs obligatoires
     if (!username || !email || !password || !confirmPassword) {
-      return res.status(400).json({ message: "Tous les champs sont obligatoires." });
+      return res.status(400).json({ message: "Tous les champs sont obligatoires.", });
     }
 
     // Vérification si l'utilisateur existe déjà
     const userExists = await Users.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ message: "L'utilisateur existe déjà." });
+      return res.status(400).json({ message: "Cet email est déjà utilisé. Veuillez vous connecter ou utiliser un autre email." });
     }
 
     // Vérification si les mots de passe correspondent
@@ -25,14 +25,11 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ message: "Les mots de passe ne correspondent pas." });
     }
 
-    // Hachage du mot de passe
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     // Création de l'utilisateur
     const user = await Users.create({
       username,
       email,
-      password: hashedPassword,
+      password,
     });
 
     if(user) {
@@ -44,7 +41,7 @@ exports.registerUser = async (req, res) => {
         message: "L'utilisateur a été créé avec succès.",
       });
     } else {
-      res.status(400).json({ message: "Données de l'utilisateur invalides." });
+      return res.status(400).json({ message: "Données de l'utilisateur invalides." });
     }
   } catch (error) {
     console.error(error);
@@ -55,10 +52,10 @@ exports.registerUser = async (req, res) => {
 // Fonction pour authentifier un utilisateur
 // @route POST /api/auth/login
 // @access Public
-exports.loginUser = async (req, res) => {
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  
   try {
-    const { email, password } = req.body;
-
     // Vérification des champs obligatoires
     if (!email || !password) {
       return res.status(400).json({ message: "Tous les champs sont obligatoires." });
@@ -67,16 +64,16 @@ exports.loginUser = async (req, res) => {
     // Vérification si l'utilisateur existe
     const user = await Users.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: "L'utilisateur n'existe pas." });
+      return res.status(401).json({ message: "L'utilisateur n'existe pas. Veuillez vous inscrire." });
     }
 
     // Vérification du mot de passe
-    const isPasswordValid = await user.comparePassword(password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Mot de passe incorrect." });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       _id: user._id,
       username: user.username,
       email: user.email,
@@ -92,19 +89,19 @@ exports.loginUser = async (req, res) => {
 // Fonction pour récupérer les informations de l'utilisateur connecté
 // @route GET /api/auth/profile
 // @access Private
-exports.getUserProfile = async (req, res) => {
+const getUserProfile = async (req, res) => {
   try {
     const user = await Users.findById(req.user._id).select("-password");
 
     if (user) {
-      res.json({
+      return res.status(200).json({
         _id: user._id,
         username: user.username,
         email: user.email,
-        createdAt: user.createdAt,
+        message: "Utilisateur trouvé avec succès.",
       });
     } else {
-      res.status(404).json({ message: "L'utilisateur n'existe pas." });
+      return res.status(404).json({ message: "L'utilisateur n'existe pas. Veuillez vous inscrire." });
     }
   } catch (error) {
     console.error(error);
@@ -112,8 +109,4 @@ exports.getUserProfile = async (req, res) => {
   }
 };
 
-module.exports = {
-  registerUser,
-  loginUser,
-  getUserProfile,
-};
+export { registerUser, loginUser, getUserProfile }; // Export des fonctions du module

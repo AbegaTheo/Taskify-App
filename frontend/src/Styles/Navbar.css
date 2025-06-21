@@ -1,0 +1,291 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0.75rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav .logo {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  font-size: 2rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+nav ul{
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  list-style: none;
+  margin-left: 1rem;
+}
+
+nav ul li a {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 0.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+nav .menu {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 2.25rem;
+  height: 2rem;
+  cursor: pointer;
+  display: none;
+}
+
+nav .menu span {
+  height: 0.4rem;
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 4px;
+  border-radius: 0.2rem;
+  transition: all 0.3s ease;
+}
+
+/* Icônes dans les boutons */
+.btn-icon {
+  margin-right: 0.5rem;
+}
+
+/* Bouton de connexion */
+.login-btn {
+  border: 2px solid white;
+  color: white;
+}
+
+.login-btn:hover {
+  background-color: white;
+  color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Bouton d'inscription */
+.register-btn {
+  background-color: #ff6b6b;
+  color: white;
+  border: 2px solid #ff6b6b;
+  transition: all 0.3s ease;;
+}
+
+.register-btn:hover {
+  background-color: #f92727;
+  border-color: #f92727;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  transition: all 0.3s ease;
+}
+
+/* Bouton Dashboard */
+.dashboard-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.dashboard-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Bouton Mes Tâches */
+.tasks-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.tasks-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Bouton À propos */
+.about-btn {
+  border: 2px solid white;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+  font-family: 'Inter', sans-serif;
+  padding: 0.5rem;
+  border-radius: 2rem;
+  cursor: pointer;;
+  transition: all 0.3s ease;
+}
+
+.about-btn:hover {
+  background-color: white;
+  color: #667eea;
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Bouton de déconnexion */
+.logout-btn {
+  background-color: #ff6b6b;
+  color: white;
+  border: 2px solid #ff6b6b;
+  font-weight: bold;
+  font-size: 1.25rem;
+  font-family: 'Inter', sans-serif;
+  padding: 0.5rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #ff5252;
+  border-color: #ff5252;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.auth-error {
+  color: red;
+  text-align: center;
+  font-weight: 200;
+  margin-top: 0.5rem;
+}
+
+/* Styles pour les écrans plus petits (responsive) */
+@media (max-width: 480px) {
+  nav .menu {
+    display: flex;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 0.25rem;
+  }
+
+  nav ul.open {
+    display: flex;
+  }
+
+  nav ul li {
+    text-align: center;
+    width: 100%;
+  }
+
+  nav ul li a {
+    margin: 0.2rem 0.5rem;
+  }
+
+  .logo-icon {
+    font-size: 1.6rem;
+  }
+}
+
+/* Styles pour les écrans plus petits (responsive) */
+@media (max-width: 768px) {
+  nav ul {
+    display: none; /* Cache la liste de liens par défaut */
+    flex-direction: column; /* Les liens s'empilent verticalement */
+    width: 100%;
+    position: absolute;
+    top: 60px; /* Ajustez en fonction de la hauteur de votre navbar */
+    left: 0;
+    background-color: #f8f9fa; /* Même couleur de fond que la navbar */
+    padding: 1rem 0;
+  }
+
+  nav ul.open {
+    display: flex; /* Affiche la liste quand le menu est ouvert */
+  }
+
+  nav ul li {
+    margin: 0;
+    text-align: center; /* Centre le texte des liens */
+  }
+
+  nav ul li a {
+    padding: 0.8rem 0; /* Ajoute de l'espacement vertical aux liens */
+    display: block; /* Fait que les liens prennent toute la largeur */
+    width: 100%;
+  }
+
+  .menu {
+    display: flex; /* Affiche le bouton menu sur les petits écrans */
+  }
+}
+
+/* Responsive Design */
+/* @media (max-width: 968px) {
+} */
+
+@media (max-width: 768px) {
+
+  .logo-icon {
+    font-size: 1.8rem;
+  }
+}
+
+/* Animations supplémentaires */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+  }
+  100% {
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  }
+}

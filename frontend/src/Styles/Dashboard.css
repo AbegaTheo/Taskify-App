@@ -1,0 +1,214 @@
+/* ✅ Section de bienvenue avec bouton aligné */
+.welcome-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  color: white;
+}
+
+.welcome-content {
+  flex: 1;
+}
+
+.welcome-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 3rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.date-subtitle {
+  margin: 0;
+  font-size: 1.5rem;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+/* ✅ Bouton Ajouter une tâche dans le header */
+.add-task-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.add-task-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.add-task-btn:active {
+  transform: translateY(0);
+}
+
+/* ✅ Responsive pour mobile */
+@media (max-width: 768px) {
+  .welcome-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .welcome-content {
+    width: 100%;
+  }
+  
+  .welcome-title {
+    font-size: 1.5rem;
+  }
+  
+  .add-task-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-section {
+    padding: 1rem;
+  }
+  
+  .welcome-title {
+    font-size: 1.3rem;
+  }
+  
+  .date-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .add-task-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ✅ Autres styles existants... */
+.dashboard-container {
+  max-width: auto;
+  margin: 0 auto;
+  padding: 1rem 4rem;
+  min-height: 100vh;
+  background: transparent;
+}
+
+.loading-section {
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error-section {
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  color: #dc2626;
+  margin: 0 0 1rem 0;
+  font-weight: 500;
+}
+
+.retry-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.retry-btn:hover {
+  background: #b91c1c;
+}
+
+.auth-required {
+  text-align: center;
+  padding: 3rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.auth-required h2 {
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.auth-required p {
+  color: #6b7280;
+}
+
+.task-stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-box {
+  background: #fff;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  flex: 1;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.stat-box .icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.icon.green { color: #00c853; }
+.icon.blue { color: #2196f3; }
+.icon.purple { color: #9c27b0; }
+.icon.red { color: #f44336; }
+
+.recents-task table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.recents-task th, .recents-task td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.status.En\ Cours { color: #fbc02d; }
+.status.Terminée { color: #00c853; }
+.priority.Haute { color: #f44336; }
+.priority.Moyenne { color: #ff9800; }
+.priority.Basse { color: #4caf50; }
+
+.actions button {
+  background: none;
+  border: none;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  color: #333;
+}

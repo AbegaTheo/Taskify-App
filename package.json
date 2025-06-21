@@ -1,0 +1,25 @@
+{
+  "name": "taskify-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"cd backend && npm start\" \"cd frontend && npm start\" ",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbegaTheo/Taskify-App.git"
+  },
+  "keywords": [],
+  "author": "Abel AGOH",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AbegaTheo/Taskify-App/issues"
+  },
+  "homepage": "https://github.com/AbegaTheo/Taskify-App#readme",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

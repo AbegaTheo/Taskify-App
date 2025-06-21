@@ -1,8 +1,9 @@
-# Ignore les dépendances du backend
-/backend/node_modules/
-
 # Ignore les fichiers d'environnement du backend (clé secrète, URI MongoDB...)
 /backend/.env
+
+# Ignore le fichier test du backend
+/backend/test.js
+
 
 # Ignore les fichiers log temporaires
 *.log

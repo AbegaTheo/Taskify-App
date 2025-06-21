@@ -1,0 +1,392 @@
+.auth-container {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.auth-card {
+  background: white;
+  padding: 1.5rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.auth-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.auth-header p {
+  color: #718096;
+  font-size: 1.1rem;
+}
+
+.auth-form {
+  margin-bottom: 1.75rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 1rem;
+}
+
+/* Wrapper pour les inputs avec icônes */
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  background-color: #f7fafc;
+  margin-bottom: 1rem;
+  padding: 0 5px;
+}
+
+.input-wrapper:hover {
+  border-color: #667eea;
+}
+
+.input-wrapper input {
+  width: 100%;
+  border-radius: 15px;
+  border: none;
+  padding-left: 5px;
+  height: 50px;
+  background: transparent;
+}
+
+.input-wrapper:focus-within {
+  outline: 2px solid #667eea;
+  border-radius: 15px;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+}
+
+.input-icon {
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+/* Bouton pour toggle password - Material-UI */
+.password-toggle {
+  background: none;
+  border: none;
+  color: #a0aec0;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.password-toggle svg {
+  font-size: 1.2rem !important;
+  transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+  color: #667eea;
+}
+
+.password-toggle:hover svg {
+  color: #667eea;
+}
+
+.password-toggle:focus {
+  outline: none;
+  color: #667eea;
+  background-color: rgba(102, 126, 234, 0.1);
+}
+
+.password-toggle:focus svg {
+  color: #667eea;
+}
+
+/* Styles pour les inputs sans icônes (fallback) */
+.auth-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.auth-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.auth-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Style pour le bouton en état de chargement */
+.auth-btn.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Animation pour l'erreur */
+.auth-error {
+  background-color: #fee;
+  color: #c33;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+  border-left: 4px solid #c33;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Désactiver les champs pendant le chargement */
+input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-footer {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.auth-footer p {
+  color: #718096;
+  margin: 0;
+}
+
+.auth-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+  color: #5a67d8;
+  text-decoration: underline;
+}
+
+.auth-icon {
+  margin-right: 0.5rem;
+
+}
+
+/* Animations pour les icônes Material-UI */
+.input-icon,
+.password-toggle {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.password-toggle:active {
+  transform: scale(0.95);
+}
+
+/* États d'erreur (optionnel) */
+.form-group.error .input-with-icon {
+  border-color: #e53e3e;
+  background-color: #fed7d7;
+}
+
+.form-group.error .input-icon {
+  color: #e53e3e !important;
+}
+
+.error-message {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 1rem;
+  }
+  
+  .auth-card {
+    padding: 2rem;
+    margin: 1rem;
+  }
+  
+  .auth-header h2 {
+    font-size: 2rem;
+  }
+  
+  .input-with-icon {
+    padding: 0.8rem 0.8rem 0.8rem 2.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .input-with-toggle {
+    padding-right: 2.5rem;
+  }
+  
+  .input-icon {
+    left: 0.8rem !important;
+    font-size: 1.1rem !important;
+  }
+  
+  .password-toggle {
+    right: 0.8rem;
+    padding: 0.4rem;
+  }
+  
+  .password-toggle svg {
+    font-size: 1.1rem !important;
+  }
+  
+  .auth-btn {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 1.5rem;
+  }
+  
+  .auth-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .auth-header p {
+    font-size: 1rem;
+  }
+}
+
+/* Animation pour le chargement */
+.auth-btn:disabled {
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-btn:disabled::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Amélioration de l'accessibilité */
+.password-toggle:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.input-with-icon:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+}
+
+/* Styles spécifiques pour Material-UI */
+.MuiSvgIcon-root {
+  transition: color 0.3s ease !important;
+}
+
+/* Styles pour les navigateurs qui supportent backdrop-filter */
+@supports (backdrop-filter: blur(10px)) {
+  .auth-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* Animation d'entrée pour les icônes */
+.input-icon,
+.password-toggle svg {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Hover effects améliorés */
+.input-wrapper:hover .input-icon {
+  color: #667eea !important;
+  transform: scale(1.1);
+}
+
+.input-wrapper:hover .input-with-icon {
+  border-color: #cbd5e0;
+}
+
+/* Focus states améliorés */
+.input-wrapper:focus-within {
+  transform: translateY(-1px);
+}
+
+.input-wrapper:focus-within .input-with-icon {
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
