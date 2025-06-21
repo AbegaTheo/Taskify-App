@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import './Styles/Tasks.css';
+import './Tasks.css';
 import TaskStats from '../components/TaskStats';
 import TaskList from '../components/TaskList';
 import TaskForm from '../components/TaskForm';

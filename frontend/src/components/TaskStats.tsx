@@ -4,7 +4,7 @@ import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { Task } from '../types/Task';
-import './Styles/TaskStats.css';
+import './TaskStats.css';
 
 interface Props {
   tasks: Task[];

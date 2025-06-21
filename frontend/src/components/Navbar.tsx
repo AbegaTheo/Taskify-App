@@ -9,7 +9,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import TaskIcon from "@mui/icons-material/Task";
 
 import { useAuth } from "../context/AuthContext";
-import "./Styles/Navbar.css";
+import "./Navbar.css";
 
 const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);

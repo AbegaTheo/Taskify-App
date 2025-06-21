@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import './Styles/Dashboard.css';
+import './Dashboard.css';
 import TaskStats from '../components/TaskStats';
 import RecentsTask from '../components/RecentsTask';
 import TaskForm from '../components/TaskForm';

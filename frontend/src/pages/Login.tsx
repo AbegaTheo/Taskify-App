@@ -10,7 +10,7 @@ import {
   VisibilityOff as VisibilityOffIcon,
 } from "@mui/icons-material";
 import { useAuth } from "../context/AuthContext";
-import "./Styles/Auth.css";
+import "./Auth.css";
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });

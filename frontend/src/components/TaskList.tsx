@@ -1,6 +1,6 @@
 import React from 'react';
 import { Task } from '../types/Task';
-import './Styles/TaskList.css';
+import './TaskList.css';
 
 interface Props {
   tasks: Task[];

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Task } from '../types/Task';
-import './Styles/TaskForm.css';
+import './TaskForm.css';
 
 interface Props {
   task: Task | null;

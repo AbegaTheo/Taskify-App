@@ -9,7 +9,7 @@ import {
   VisibilityOff as VisibilityOffIcon
 } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
-import './Styles/Auth.css';
+import './Auth.css';
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
