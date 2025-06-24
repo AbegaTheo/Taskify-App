@@ -1,4 +1,4 @@
-# 📋 Taskify - Gestionnaire de Tâches Moderne
+# 📋 Taskify-App - Gestionnaire de Tâches Moderne
 
 <div align="center">
   <img src="https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React" />
