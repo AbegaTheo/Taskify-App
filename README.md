@@ -18,7 +18,7 @@
 
 ## 🎯 **À Propos du Projet**
 
-**Taskify** est une application web moderne de gestion de tâches conçue pour améliorer la productivité personnelle et professionnelle. Cette solution full-stack offre une interface intuitive pour organiser, suivre et accomplir vos tâches quotidiennes avec efficacité.
+**Taskify-App** est une application web moderne de gestion de tâches conçue pour améliorer la productivité personnelle et professionnelle. Cette solution full-stack offre une interface intuitive pour organiser, suivre et accomplir vos tâches quotidiennes avec efficacité.
 
 ### 🌟 **Objectifs Principaux**
 
@@ -126,7 +126,7 @@ npm run dev
 
 **Variables d'environnement (.env) :**
 ```env
-MONGODB_URI=mongodb://localhost:27017/taskify
+MONGODB_URI=mongodb://localhost:27017/taskify // ou votre chaîne de connection MongoDB
 JWT_SECRET=your-super-secret-jwt-key
 PORT=5000
 NODE_ENV=development
@@ -157,7 +157,6 @@ REACT_APP_ENV=development
 ### **4. Accès à l'Application**
 - **Frontend** : http://localhost:3000
 - **Backend API** : http://localhost:5000
-- **Health Check** : http://localhost:5000/health
 
 ---
 
@@ -166,10 +165,12 @@ REACT_APP_ENV=development
 ```
 Taskify-App/
 ├── 📁 backend/                 # API Backend
+│   ├── 📁 config/              # Configuration de connexion à la base de données MongoDB
 │   ├── 📁 controllers/         # Contrôleurs de l'API
 │   ├── 📁 middleware/          # Middlewares personnalisés
 │   ├── 📁 models/              # Modèles de données MongoDB
 │   ├── 📁 routes/              # Routes de l'API
+│   ├── 📁 utils/               # Générateur du Token
 │   ├── 📄 server.js            # Point d'entrée du serveur
 │   └── 📄 package.json         # Dépendances backend
 │
@@ -179,6 +180,7 @@ Taskify-App/
 │   │   ├── 📁 components/      # Composants réutilisables
 │   │   ├── 📁 context/         # Contextes React
 │   │   ├── 📁 pages/           # Pages de l'application
+│   |   ├── 📁 routes/          # Protection des pages
 │   │   ├── 📁 services/        # Services API
 │   │   ├── 📁 styles/          # Styles CSS
 │   │   ├── 📁 types/           # Types TypeScript
@@ -206,11 +208,6 @@ GET    /api/tasks           # Récupérer toutes les tâches
 POST   /api/tasks           # Créer une nouvelle tâche
 PUT    /api/tasks/:id       # Modifier une tâche
 DELETE /api/tasks/:id       # Supprimer une tâche
-```
-
-### **Utilitaires**
-```http
-GET    /health              # Vérification de l'état du serveur
 ```
 
 ---
@@ -250,12 +247,10 @@ REACT_APP_ENV=production
 
 ```bash
 # Tests du frontend
-cd frontend
-npm test
+URL_FRONTEND = https://taskify-app-gleb.onrender.com
 
 # Tests du backend
-cd backend
-npm test
+URL_BACKEND = https://taskify-backend-6dkg.onrender.com
 ```
 
 ---
@@ -314,18 +309,8 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 
 **Abega Theo**
 - GitHub: [@AbegaTheo](https://github.com/AbegaTheo)
-- Email: theo.abega@example.com
-- LinkedIn: [Theo Abega](https://linkedin.com/in/theo-abega)
-
----
-
-## 🙏 **Remerciements**
-
-- [React](https://reactjs.org/) pour l'excellent framework frontend
-- [Express.js](https://expressjs.com/) pour le framework backend robuste
-- [MongoDB](https://www.mongodb.com/) pour la base de données flexible
-- [Render](https://render.com/) pour l'hébergement cloud gratuit
-- La communauté open source pour les outils et bibliothèques utilisés
+- Email: agohabel4@gmail.com
+- LinkedIn: [Abel AGOH](www.linkedin.com/in/abel-agoh4)
 
 ---
 
