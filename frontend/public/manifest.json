@@ -1,24 +1,17 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Taskify",
+  "name": "Taskify-App - Gestionnaire de Tâches Moderne",
+  "description": "Application moderne de gestion de tâches.",
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
+      "src": "logo_1.jpg",
+      "type": "image/jpg",
       "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
     }
   ],
   "start_url": ".",
+  "lang": "fr-FR",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
