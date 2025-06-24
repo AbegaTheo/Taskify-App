@@ -1,17 +1,34 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Task } from '../types/Task';
 import './TaskList.css';
+import { Edit, Delete, CheckCircle, ReplayCircleFilled } from "@mui/icons-material";
 
 interface Props {
   tasks: Task[];
+  searchTerm: string;
+  statusFilter: string;
+  priorityFilter: string;
+  selectedDate: string;
+  sortBy: "dueDate" | "priority" | "createdAt" | "title";
+  sortOrder: "asc" | "desc";
   onEdit: (task: Task) => void;
   onDelete: (taskId: string) => void;
   onToggleStatus: (taskId: string, newStatus: Task["status"]) => void;
 }
 
-const TaskList: React.FC<Props> = ({ tasks, onEdit, onDelete, onToggleStatus }) => {
-  // ✅ Fonction pour obtenir l'icône de priorité
-  const getPriorityIcon = (priority: string) => {
+const TaskList: React.FC<Props> = ({
+  tasks,
+  searchTerm,
+  statusFilter,
+  priorityFilter,
+  selectedDate,
+  sortBy,
+  sortOrder,
+  onEdit,
+  onDelete,
+  onToggleStatus
+}) => {
+  const getPriorityIcon = (priority: string = '') => {
     switch (priority) {
       case 'Haute': return '🔴';
       case 'Moyenne': return '🟡';
@@ -20,8 +37,7 @@ const TaskList: React.FC<Props> = ({ tasks, onEdit, onDelete, onToggleStatus }) 
     }
   };
 
-  // ✅ Fonction pour obtenir l'icône de statut
-  const getStatusIcon = (status: string) => {
+  const getStatusIcon = (status: string = '') => {
     switch (status) {
       case 'Terminée': return '✅';
       case 'En Cours': return '🔄';
@@ -29,7 +45,6 @@ const TaskList: React.FC<Props> = ({ tasks, onEdit, onDelete, onToggleStatus }) 
     }
   };
 
-  // ✅ Fonction pour formater la date
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const today = new Date();
@@ -47,39 +62,97 @@ const TaskList: React.FC<Props> = ({ tasks, onEdit, onDelete, onToggleStatus }) 
     }
   };
 
-  // ✅ Fonction pour obtenir la classe CSS selon la date d'échéance
   const getDateClass = (dateString: string) => {
     const date = new Date(dateString);
     const today = new Date();
     const diffTime = date.getTime() - today.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-    if (diffDays < 0) return 'overdue';
-    if (diffDays === 0) return 'today';
-    if (diffDays <= 3) return 'soon';
-    return 'normal';
+    if (diffDays < 0) return "overdue";
+    if (diffDays === 0) return "today";
+    if (diffDays <= 3) return "soon";
+    return "normal";
   };
 
-  // ✅ Fonction pour basculer le statut
+  const filteredTasks = useMemo(() => {
+    let filtered = [...tasks];
+
+    if (searchTerm) {
+      filtered = filtered.filter(task =>
+        task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        task.description?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (statusFilter !== "all") {
+      filtered = filtered.filter(task => task.status === statusFilter);
+    }
+
+    if (priorityFilter !== "all") {
+      filtered = filtered.filter(task => task.priority === priorityFilter);
+    }
+
+    if (selectedDate) {
+      filtered = filtered.filter(task =>
+        task.dueDate.startsWith(selectedDate)
+      );
+    }
+
+    filtered.sort((a, b) => {
+      let aValue: any;
+      let bValue: any;
+
+      switch (sortBy) {
+        case "priority":
+          const priorityMap = { Haute: 3, Moyenne: 2, Faible: 1 };
+          aValue = priorityMap[a.priority as keyof typeof priorityMap];
+          bValue = priorityMap[b.priority as keyof typeof priorityMap];
+          break;
+        case "dueDate":
+          aValue = new Date(a.dueDate);
+          bValue = new Date(b.dueDate);
+          break;
+        case "title":
+          aValue = a.title.toLowerCase();
+          bValue = b.title.toLowerCase();
+          break;
+        case "createdAt":
+        default:
+          aValue = new Date(a.createdAt || 0);
+          bValue = new Date(b.createdAt || 0);
+          break;
+      }
+
+      if (sortOrder === "asc") {
+        return aValue > bValue ? 1 : -1;
+      } else {
+        return aValue < bValue ? 1 : -1;
+      }
+    });
+
+    return filtered;
+  }, [tasks, searchTerm, statusFilter, priorityFilter, selectedDate, sortBy, sortOrder]);
+
   const handleToggleStatus = (task: Task) => {
-    const newStatus = task.status === 'Terminée' ? 'En Cours' : 'Terminée';
+    const status = task.status === 'Terminée' ? 'En Cours' : 'Terminée';
     if (task._id) {
-      onToggleStatus(task._id, newStatus);
+      onToggleStatus(task._id, status);
     }
   };
-  // ✅ Fonction pour confirmer la suppression
+
   const handleDelete = (task: Task) => {
     if (task._id && window.confirm(`Êtes-vous sûr de vouloir supprimer la tâche "${task.title}" ?`)) {
       onDelete(task._id);
     }
   };
-  if (tasks.length === 0) {
+
+  if (filteredTasks.length === 0) {
     return (
       <div className="task-list-container">
         <div className="empty-state">
           <div className="empty-icon">📝</div>
           <h3>Aucune tâche trouvée</h3>
-          <p>Commencez par créer votre première tâche !</p>
+          <p>Commencez par créer une nouvelle tâche !</p>
         </div>
       </div>
     );
@@ -89,55 +162,55 @@ const TaskList: React.FC<Props> = ({ tasks, onEdit, onDelete, onToggleStatus }) 
     <div className="task-list-container">
       <div className="task-list-header">
         <h2>📋 Liste complète de vos tâches</h2>
-        <span className="task-count">{tasks.length} tâche{tasks.length !== 1 ? 's' : ''}</span>
+        <span className="task-count">{filteredTasks.length} tâche{filteredTasks.length !== 1 ? 's' : ''}</span>
       </div>
 
       <div className="task-list">
-        {tasks.map((task) => (
-          <div 
-            key={task._id} 
+        {filteredTasks.map((task) => (
+          <div
+            key={`${task._id}-${task.updatedAt}`}
             className={`task-card ${task.status === 'Terminée' ? 'completed' : ''} ${getDateClass(task.dueDate)}`}
           >
-            {/* ✅ En-tête de la tâche */}
             <div className="task-header">
               <div className="task-title-section">
-                <h3 className="task-title">{task.title}</h3>
+                <h3 className="task-title"><span className='title'>Titre :</span> {task.title}</h3>
                 <div className="task-meta">
-                  <span className={`priority-badge priority-${task.priority.toLowerCase()}`}>
+                  <span className={`priority-badge priority-${task.priority?.toLowerCase() || 'non-defini'}`}>
                     {getPriorityIcon(task.priority)} {task.priority}
                   </span>
-                  <span className={`status-badge status-${task.status.toLowerCase().replace(' ', '-')}`}>
+                  <span className={`status-badge status-${task.status?.toLowerCase().replace(' ', '-') || 'inconnu'}`}>
                     {getStatusIcon(task.status)} {task.status}
                   </span>
                 </div>
               </div>
-              
+
               <div className="task-actions">
-                <button 
-                  className="action-btn edit-btn"
-                  onClick={() => onEdit(task)}
-                  title="Modifier la tâche"
-                >
-                  ✏️
+                <button className="action-btn edit-btn" onClick={() => onEdit(task)} title="Modifier la tâche">
+                  <Edit fontSize="medium" />
                 </button>
-                <button 
-                  className="action-btn delete-btn"
-                  onClick={() => handleDelete(task)}
-                  title="Supprimer la tâche"
+                <button className="action-btn delete-btn" onClick={() => handleDelete(task)} title="Supprimer la tâche">
+                  <Delete fontSize="medium" />
+                </button>
+                <button
+                  className={`action-btn toggle-status-btn ${task.status === 'Terminée' ? 'mark-pending' : 'mark-complete'}`}
+                  onClick={() => handleToggleStatus(task)}
+                  title={task.status === 'Terminée' ? 'Remettre en cours' : 'Marquer comme terminée'}
                 >
-                  🗑️
+                  {task.status === 'Terminée' ? (
+                    <ReplayCircleFilled fontSize="medium" />
+                  ) : (
+                    <CheckCircle fontSize="medium" />
+                  )}
                 </button>
               </div>
             </div>
 
-            {/* ✅ Description */}
             {task.description && (
               <div className="task-description">
                 <p>{task.description}</p>
               </div>
             )}
 
-            {/* ✅ Informations de la tâche */}
             <div className="task-info">
               <div className={`due-date ${getDateClass(task.dueDate)}`}>
                 <span className="due-date-text">{formatDate(task.dueDate)}</span>
@@ -151,7 +224,6 @@ const TaskList: React.FC<Props> = ({ tasks, onEdit, onDelete, onToggleStatus }) 
                 </span>
               </div>
 
-              {/* ✅ Dates de création et modification */}
               <div className="task-timestamps">
                 {task.createdAt && (
                   <span className="timestamp">
@@ -169,16 +241,6 @@ const TaskList: React.FC<Props> = ({ tasks, onEdit, onDelete, onToggleStatus }) 
                   </span>
                 )}
               </div>
-            </div>
-
-            {/* ✅ Actions rapides */}
-            <div className="task-quick-actions">
-              <button 
-                className={`quick-action-btn toggle-status-btn ${task.status === 'Terminée' ? 'mark-pending' : 'mark-complete'}`}
-                onClick={() => handleToggleStatus(task)}
-              >
-                {task.status === 'Terminée' ? '🔄 Marquer en cours' : '✅ Marquer terminée'}
-              </button>
             </div>
           </div>
         ))}

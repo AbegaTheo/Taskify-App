@@ -46,7 +46,7 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
             onChange={(e) => onStatusChange(e.target.value)}
           >
             <option value="all">Tous les statuts</option>
-            <option value="En Cours">En cours</option>
+            <option value="En Cours">En Cours</option>
             <option value="Terminée">Terminée</option>
           </select>
         </div>
@@ -61,7 +61,7 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
             <option value="all">Toutes les priorités</option>
             <option value="Haute">Haute</option>
             <option value="Moyenne">Moyenne</option>
-            <option value="Basse">Basse</option>
+            <option value="Basse">Faible</option>
           </select>
         </div>
 

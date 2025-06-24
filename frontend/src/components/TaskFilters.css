@@ -33,6 +33,12 @@
   color: #444;
 }
 
+.filter-group input[type="date"]:hover, .filter-group input[type="date"]:focus-within,
+.filter-group select:hover, .filter-group select:focus-within {
+  border: 1px solid #667eea;
+  border-color: #667eea;
+}
+
 .filter-group input,
 .filter-group select {
   padding: 0.7rem;
@@ -49,15 +55,30 @@
   padding-left: 0.5rem;
 }
 
+.search-wrapper {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.search-wrapper:hover, .search-wrapper:focus-within  {
+  border: 1px solid #667eea;
+  border-color: #667eea;
+}
+
 .search-icon {
   color: #888;
 }
 
 .search-wrapper input {
-  border: none;
+  border: 1px solid transparent;
   background: transparent;
   padding: 0.7rem;
   width: 100%;
   font-size: 0.95rem;
   outline: none;
+}
+
+.search-wrapper input::placeholder {
+  font-style: italic;
+  font-weight: 400;
 }

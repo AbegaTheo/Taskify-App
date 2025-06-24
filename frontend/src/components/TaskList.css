@@ -28,7 +28,7 @@
   color: white;
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 500;
 }
 
@@ -40,16 +40,18 @@
 
 /* ✅ Carte de tâche */
 .task-card {
-  padding: 1.5rem;
-  border-bottom: 1px solid #f3f4f6;
+  padding: 1.2rem;
+  border-bottom: 5px solid white;
   transition: all 0.3s ease;
   position: relative;
   cursor: pointer;
+  background: #1f2937;
+  background-color: #1f2937;
 }
 
-/* .task-card:hover {
+.task-card:hover {
   transform: translateX(4px);
-} */
+}
 
 .task-card:last-child {
   border-bottom: none;
@@ -58,22 +60,22 @@
 /* ✅ États des tâches selon la date */
 .task-card.overdue {
   border-left: 4px solid #ef4444;
-  background: linear-gradient(90deg, #fef2f2 0%, white 10%);
+  /*background: linear-gradient(90deg, #fef2f2 0%, white 10%);*/
 }
 
 .task-card.today {
   border-left: 4px solid #f59e0b;
-  background: linear-gradient(90deg, #fffbeb 0%, white 10%);
+  /*background: linear-gradient(90deg, #fffbeb 0%, white 10%);*/
 }
 
 .task-card.soon {
   border-left: 4px solid #3b82f6;
-  background: linear-gradient(90deg, #eff6ff 0%, white 10%);
+  /*background: linear-gradient(90deg, #eff6ff 0%, white 10%);*/
 }
 
 .task-card.completed {
-  opacity: 0.7;
-  background: linear-gradient(90deg, #f0fdf4 0%, white 10%);
+  opacity: 0.5;
+  /*background: linear-gradient(90deg, #f0fdf4 0%, white 10%);*/
   border-left: 4px solid #22c55e;
 }
 
@@ -95,11 +97,14 @@
 }
 
 .task-title {
-  margin: 0 0 0.5rem 0;
-  color: black;
-  font-size: 1.125rem;
-  font-weight: 600;
+  margin: 0 0 0.65rem 0.5rem;
+  font-size: 1.325rem;
+  font-weight: 700;
   line-height: 1.4;
+}
+
+.title {
+  text-decoration: 2px underline;
 }
 
 .task-meta {
@@ -130,7 +135,7 @@
   color: #d97706;
 }
 
-.priority-badge.priority-basse {
+.priority-badge.priority-faible {
   background: #dcfce7;
   color: #16a34a;
 }
@@ -149,37 +154,47 @@
 .task-actions {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
 }
 
-.action-btn {
-  background: #f3f4f6;
-  border: 1px solid #d1d5db;
-  color: #6b7280;
-  width: 36px;
-  height: 36px;
+.task-actions button {
+  border: none;
+  padding: 0.5rem;
   border-radius: 6px;
+    width: 36px;
+  height: 36px;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
 }
 
-.action-btn:hover {
-  transform: scale(1.05);
+.task-actions button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Bouton Modifier - Bleu */
+.edit-btn {
+  color: #1976d2;
+  background-color: #e3f2fd;
 }
 
 .edit-btn:hover {
-  background: #dbeafe;
-  border-color: #3b82f6;
-  color: #2563eb;
+  background-color: #bbdefb;
+  color: #0d47a1;
+}
+
+/* Bouton Supprimer - Rouge */
+.delete-btn {
+  color: #e53935;
+  background-color: #ffebee;
 }
 
 .delete-btn:hover {
-  background: #fee2e2;
-  border-color: #ef4444;
-  color: #dc2626;
+  background-color: #ffcdd2;
+  color: #b71c1c;
 }
 
 /* ✅ Description de la tâche */
@@ -188,15 +203,14 @@
 }
 
 .task-description p {
-  margin: 0;
   color: #6b7280;
-  line-height: 1.5;
-  font-size: 0.95rem;
+  font-size: 0.975rem;
+  width: 100%;
 }
 
 /* ✅ Informations de la tâche */
 .task-info {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .due-date {
@@ -222,7 +236,7 @@
 }
 
 .due-date.normal .due-date-text {
-  color: #374151;
+  color: #2d983a;
 }
 
 .due-date-full {
@@ -238,41 +252,13 @@
 }
 
 .timestamp {
-  font-size: 0.75rem;
-  color: #9ca3af;
+  font-size: 0.795rem;
+  color: #b5bdcb;
 }
 
 .completed-timestamp {
   color: #16a34a;
   font-weight: 500;
-}
-
-/* ✅ Actions rapides */
-.task-quick-actions {
-  display: flex;
-  gap: 0.5rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid #f3f4f6;
-}
-
-.quick-action-btn {
-  background: #f8fafc;
-  border: 1px solid #e5e7eb;
-  color: #374151;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.quick-action-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .toggle-status-btn.mark-complete {
@@ -301,7 +287,6 @@
 .empty-state {
   text-align: center;
   padding: 3rem 2rem;
-  color: #6b7280;
 }
 
 .empty-icon {
@@ -311,13 +296,14 @@
 
 .empty-state h3 {
   margin: 0 0 0.5rem 0;
-  color: #374151;
+  color: #c1cadc;
   font-size: 1.25rem;
 }
 
 .empty-state p {
   margin: 0;
   font-size: 1rem;
+  color: #c1cadc;
 }
 
 /* ✅ Scrollbar personnalisée */
@@ -449,21 +435,18 @@
 }
 
 /* ✅ Focus et accessibilité */
-.action-btn:focus,
-.quick-action-btn:focus {
+.action-btn:focus {
   outline: 2px solid #667eea;
   outline-offset: 2px;
 }
 
 /* ✅ États désactivés */
-.action-btn:disabled,
-.quick-action-btn:disabled {
+.action-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.action-btn:disabled:hover,
-.quick-action-btn:disabled:hover {
+.action-btn:disabled:hover {
   transform: none;
   box-shadow: none;
 }

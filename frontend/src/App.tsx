@@ -1,6 +1,8 @@
 // src/App.tsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -17,6 +19,7 @@ import "./App.css";
 function App() {
   return (
     <AuthProvider>
+      <ToastContainer position="top-center" autoClose={2000} />
       <Router>
         <div className="App">
           <Navbar />

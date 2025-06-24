@@ -1,5 +1,5 @@
 import React from "react";
-import { Edit, Delete, CheckCircle } from "@mui/icons-material";
+import { Edit, Delete, CheckCircle, ReplayCircleFilled } from "@mui/icons-material";
 import { Task } from "../types/Task"; // 💡 Assure-toi que le chemin est correct
 import { NavLink } from "react-router-dom";
 import "./RecentsTask.css";
@@ -51,10 +51,10 @@ const RecentsTask: React.FC<Props> = ({
               </td>
               <td>{new Date(task.dueDate).toLocaleDateString("fr-FR")}</td>
               <td className="actions">
-                <button title="Modifier" onClick={() => onEdit(task)}>
+                <button title="Modifier la tâche" onClick={() => onEdit(task)}>
                   <Edit fontSize="medium" />
                 </button>
-                <button title="Supprimer" onClick={() => onDelete(task._id!)}>
+                <button title="Supprimer la tâche" onClick={() => onDelete(task._id!)}>
                   <Delete fontSize="medium" />
                 </button>
                 <button
@@ -70,7 +70,11 @@ const RecentsTask: React.FC<Props> = ({
                     )
                   }
                 >
-                  <CheckCircle fontSize="medium" />
+                  {task.status === 'Terminée' ? (
+                    <ReplayCircleFilled fontSize="medium" />
+                  ) : (
+                    <CheckCircle fontSize="medium" />
+                  )}
                 </button>
               </td>
             </tr>

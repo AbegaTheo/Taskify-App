@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import Users from '../models/Users.js';
+import jwt from "jsonwebtoken";
+import Users from "../models/Users.js";
 
 const protect = async (req, res, next) => {
   let token;
@@ -8,25 +8,30 @@ const protect = async (req, res, next) => {
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
-    
     try {
-      // récupérer le token du header
       token = req.headers.authorization.split(" ")[1];
-      // vérifier le token
+
+      // ✅ Vérifie le token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      /// récupérer l'utilisateur associé au token
+
+      // ✅ Injecte les données utilisateur (sans mot de passe)
       req.user = await Users.findById(decoded.id).select("-password");
 
+      if (!req.user) {
+        return res.status(401).json({ message: "Utilisateur non trouvé 🚫" });
+      }
+
+      // ✅ Autorisation confirmée
       return next();
     } catch (error) {
-      console.error(error);
-      return res.status(401).json({ message: "Non autorisé, Token invalide ou expiré 🚫" });
+      console.error("❌ Erreur dans le middleware protect:", error.message);
+      return res.status(401).json({ message: "Token invalide ou expiré 🚫" });
     }
   }
 
-  if (!token) {
-      return res.status(401).json({ message: "Pas de token, accès refusé 🚫" });
-  }
-  };
+  // ✅ Aucun token envoyé
+  console.warn("🔒 Aucun token dans l'en-tête Authorization");
+  return res.status(401).json({ message: "Pas de token, accès refusé 🚫" });
+};
 
-  export { protect };
+export { protect };

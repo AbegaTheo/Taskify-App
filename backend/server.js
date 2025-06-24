@@ -17,8 +17,19 @@ connectDB();
 const app = express();
 
 // Middleware
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://taskify-app-gleb.onrender.com"
+];
+
 app.use(cors({
-  origin: "https://taskify-backend-6dkg.onrender.com",
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
 

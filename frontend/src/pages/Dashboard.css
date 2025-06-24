@@ -199,11 +199,11 @@
   border-bottom: 1px solid #f0f0f0;
 }
 
-.status.En\ Cours { color: #fbc02d; }
+.status.En\ Cours { color: #2196f3; }
 .status.Terminée { color: #00c853; }
 .priority.Haute { color: #f44336; }
 .priority.Moyenne { color: #ff9800; }
-.priority.Basse { color: #4caf50; }
+.priority.Faible { color: #4caf50; }
 
 .actions button {
   background: none;
