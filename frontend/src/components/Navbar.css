@@ -224,47 +224,65 @@ nav .menu span {
 
 /* Styles pour les écrans plus petits (responsive) */
 @media (max-width: 768px) {
-  nav ul {
-    display: none; /* Cache la liste de liens par défaut */
-    flex-direction: column; /* Les liens s'empilent verticalement */
-    width: 100%;
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  nav .menu {
+    display: flex;
     position: absolute;
-    top: 60px; /* Ajustez en fonction de la hauteur de votre navbar */
+    top: 1.2rem;
+    right: 1.5rem;
+    z-index: 999;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: absolute;
+    top: 4.5rem;
     left: 0;
-    background-color: #f8f9fa; /* Même couleur de fond que la navbar */
-    padding: 1rem 0;
+    z-index: 998;
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
   }
 
   nav ul.open {
-    display: flex; /* Affiche la liste quand le menu est ouvert */
+    display: flex;
   }
 
   nav ul li {
-    margin: 0;
-    text-align: center; /* Centre le texte des liens */
-  }
-
-  nav ul li a {
-    padding: 0.8rem 0; /* Ajoute de l'espacement vertical aux liens */
-    display: block; /* Fait que les liens prennent toute la largeur */
     width: 100%;
+    text-align: center;
+    margin: 0.3rem 0;
   }
 
-  .menu {
-    display: flex; /* Affiche le bouton menu sur les petits écrans */
+  nav ul li a,
+  nav ul li button {
+    width: 100%;
+    justify-content: center;
+    font-size: 1.1rem;
+    padding: 0.8rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    color: white;
   }
-}
 
-/* Responsive Design */
-/* @media (max-width: 968px) {
-} */
-
-@media (max-width: 768px) {
+  nav ul li a:hover,
+  nav ul li button:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
 
   .logo-icon {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
   }
-}
+} 
 
 /* Animations supplémentaires */
 @keyframes fadeIn {

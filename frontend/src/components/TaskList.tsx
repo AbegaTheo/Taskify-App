@@ -149,8 +149,8 @@ const TaskList: React.FC<Props> = ({
   if (filteredTasks.length === 0) {
     return (
       <div className="task-list-container">
-        <div className="empty-state">
-          <div className="empty-icon">📝</div>
+        <div className="vide-state">
+          <div className="vide-icon">📝</div>
           <h3>Aucune tâche trouvée</h3>
           <p>Commencez par créer une nouvelle tâche !</p>
         </div>

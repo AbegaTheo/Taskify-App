@@ -1,7 +1,7 @@
 .recents-task {
   background-color: #fff;
   border-radius: 1rem;
-  padding: 2rem;
+  padding: 1.5rem 2rem;
   margin-top: 2rem;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.3s ease;
@@ -12,17 +12,52 @@
 }
 
 .recents-task h2 {
-  margin-bottom: 1.5rem;
   color: #2c2c2c;
   font-size: 1.5rem;
   font-weight: 700;
+  margin: 1.5rem 0 0 0;
+  padding: 0;
+}
+
+.recents-task-title {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.recents-task-title h3 {
+  color: #545252;
+  font-size: 1rem;
+  font-weight: 200;
+  letter-spacing: 0.125rem;
+  margin-top: 0.5rem;
+}
+
+.reset-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.reset-btn:hover {
+  background-color: #0056b3;
 }
 
 .recents-task-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.recents-task-buttons {
+  display: flex;
+  gap: 1rem;
 }
 
 .task-btn {
@@ -30,17 +65,17 @@
   border: 2px solid rgba(27, 34, 223, 0.5);
   color: white;
   text-decoration: none;
-  padding: 12px 16px;
+  padding: 0.5rem 0.1rem;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);  white-space: nowrap;
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
 }
 
 .task-btn:hover {
@@ -57,7 +92,38 @@
   transform: scale(1.1);
 }
 
+.empty-state {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: 0.12rem dashed #050505;
+  border-radius: 12px;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state h3 {
+  margin: 0 0 0.5rem 0;
+  color: #c1cadc;
+  font-size: 1.25rem;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
 /* ✅ Tableau */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .task-table {
   width: 100%;
   border-collapse: collapse;
@@ -92,8 +158,24 @@
 }
 
 .task-table tbody tr:hover {
+  cursor: pointer;
   background-color: #f8fafc;
   transform: scale(1.01);
+}
+
+@media (max-width: 360px) {
+  .recents-task h2 {
+    font-size: 1.2rem;
+  }
+
+  .task-btn {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .actions button {
+    padding: 0.3rem;
+  }
 }
 
 /* ✅ Badges de statut avec vos couleurs personnalisées */
@@ -375,6 +457,13 @@
   .task-btn {
     align-self: stretch;
     justify-content: center;
+    width: 100%;
+    /* ✅ prend toute la largeur */
+    font-size: 0.85rem;
+    /* ✅ texte un peu plus petit */
+    white-space: normal;
+    /* ✅ permet le retour à la ligne */
+    padding: 0.3rem 1rem;
   }
 
   .task-table th,
@@ -401,6 +490,16 @@
 @media (max-width: 480px) {
   .task-table {
     font-size: 0.8rem;
+  }
+
+  .task-btn {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  .task-table th:nth-child(4),
+  .task-table td:nth-child(4) {
+    display: none;
   }
 
   .task-table th,

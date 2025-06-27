@@ -61,7 +61,7 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
             <option value="all">Toutes les priorités</option>
             <option value="Haute">Haute</option>
             <option value="Moyenne">Moyenne</option>
-            <option value="Basse">Faible</option>
+            <option value="Faible">Faible</option>
           </select>
         </div>
 

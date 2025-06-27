@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import './Dashboard.css';
-import TaskStats from '../components/TaskStats';
-import RecentsTask from '../components/RecentsTask';
-import TaskForm from '../components/TaskForm';
-import TaskFilters from '../components/TaskFilters';
-import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
-import { Task } from '../types/Task';
+import React, { useEffect, useState, useCallback } from "react";
+import "./Dashboard.css";
+import TaskStats from "../components/TaskStats";
+import RecentsTask from "../components/RecentsTask";
+import TaskForm from "../components/TaskForm";
+import TaskFilters from "../components/TaskFilters";
+import { useAuth } from "../context/AuthContext";
+import axios from "axios";
+import { Task } from "../types/Task";
 
 // 🔧 Détection de l'environnement pour l'API
 const isProduction = window.location.hostname.includes("render.com");
@@ -20,20 +20,31 @@ const Dashboard: React.FC = () => {
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
   const [showTaskForm, setShowTaskForm] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [priorityFilter, setPriorityFilter] = useState('all');
-  const [selectedDate, setSelectedDate] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [priorityFilter, setPriorityFilter] = useState("all");
+  const [selectedDate, setSelectedDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // ✅ Configuration axios avec token
-  const getAxiosConfig = useCallback(() => ({
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  }), [token]);
+  const getAxiosConfig = useCallback(
+    () => ({
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }),
+    [token]
+  );
+
+  // ✅ Fonction pour reset tous les filtres
+  const resetAllFilters = () => {
+  setSearchTerm('');
+  setStatusFilter('all');
+  setPriorityFilter('all');
+  setSelectedDate('');
+};
 
   // ✅ Fonction pour récupérer les tâches (useCallback pour éviter les re-renders)
   const fetchTasks = useCallback(async () => {
@@ -44,27 +55,28 @@ const Dashboard: React.FC = () => {
 
     setLoading(true);
     setError(null);
-    
+
     try {
       console.log("🔄 Chargement des tâches...");
-      
+
       const response = await axios.get(`${API_URL}/tasks`, getAxiosConfig());
-      
+
       console.log("✅ Tâches récupérées:", response.data);
-      
+
       const tasksData = Array.isArray(response.data) ? response.data : [];
       setTasks(tasksData);
       setFilteredTasks(tasksData);
-      
     } catch (err: any) {
       console.error("❌ Erreur lors du chargement des tâches:", err);
-      
+
       if (err.response?.status === 404) {
         setError("Route des tâches non trouvée. Vérifiez votre serveur.");
       } else if (err.response?.status === 401) {
         setError("Non autorisé. Veuillez vous reconnecter.");
       } else {
-        setError(err.response?.data?.message || "Erreur lors du chargement des tâches");
+        setError(
+          err.response?.data?.message || "Erreur lors du chargement des tâches"
+        );
       }
     } finally {
       setLoading(false);
@@ -72,7 +84,7 @@ const Dashboard: React.FC = () => {
   }, [token, isAuthenticated, getAxiosConfig]);
 
   // ✅ Fonction pour filtrer les tâches (useCallback)
-  const fetchFilteredTasks = useCallback(async (filters: any) => {
+ const fetchFilteredTasks = useCallback(async (filters: any) => {
     if (!token || !isAuthenticated) return;
 
     try {
@@ -96,26 +108,29 @@ const Dashboard: React.FC = () => {
   // ✅ Filtrage local en fallback
   const applyLocalFilters = useCallback(() => {
     let filtered = [...tasks];
-    
+
     if (searchTerm) {
-      filtered = filtered.filter(task =>
-        task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.description.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(
+        (task) =>
+          task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          task.description.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter(task => task.status === statusFilter);
+
+    if (statusFilter !== "all") {
+      filtered = filtered.filter((task) => task.status === statusFilter);
     }
-    
-    if (priorityFilter !== 'all') {
-      filtered = filtered.filter(task => task.priority === priorityFilter);
+
+    if (priorityFilter !== "all") {
+      filtered = filtered.filter((task) => task.priority === priorityFilter);
     }
-    
+
     if (selectedDate) {
-      filtered = filtered.filter(task => task.dueDate.startsWith(selectedDate));
+      filtered = filtered.filter((task) =>
+        task.dueDate.startsWith(selectedDate)
+      );
     }
-    
+
     setFilteredTasks(filtered);
   }, [tasks, searchTerm, statusFilter, priorityFilter, selectedDate]);
 
@@ -127,43 +142,32 @@ const Dashboard: React.FC = () => {
   }, [isAuthenticated, token, fetchTasks]);
 
   // ✅ Appliquer les filtres
-  useEffect(() => {
-    if (tasks.length === 0) return;
+useEffect(() => {
+  applyLocalFilters();
+}, [tasks, searchTerm, statusFilter, priorityFilter, selectedDate]);
 
-    // Si on a des filtres actifs, essayer le filtrage serveur
-    if (searchTerm || statusFilter !== 'all' || priorityFilter !== 'all' || selectedDate) {
-      const filters = {
-        ...(searchTerm && { search: searchTerm }),
-        ...(statusFilter !== 'all' && { status: statusFilter }),
-        ...(priorityFilter !== 'all' && { priority: priorityFilter }),
-        ...(selectedDate && { dueDate: selectedDate })
-      };
-      
-      fetchFilteredTasks(filters);
-    } else {
-      // Pas de filtres, afficher toutes les tâches
-      setFilteredTasks(tasks);
-    }
-  }, [tasks, searchTerm, statusFilter, priorityFilter, selectedDate, fetchFilteredTasks]);
 
   // ✅ Ajouter une nouvelle tâche
-  const handleAddTask = async (taskData: Omit<Task, '_id'>) => {
+  const handleAddTask = async (taskData: Omit<Task, "_id">) => {
     try {
       console.log("🔄 Création d'une nouvelle tâche...", taskData);
-      
+
       const response = await axios.post(
         `${API_URL}/tasks`,
         taskData,
         getAxiosConfig()
       );
-      
+
       const newTask = response.data;
-      setTasks(prev => [...prev, newTask]);
+      setTasks((prev) => [...prev, newTask]);
       console.log("✅ Nouvelle tâche créée:", newTask);
-      
+      fetchTasks();
     } catch (error: any) {
       console.error("❌ Erreur lors de la création:", error);
-      setError(error.response?.data?.message || "Erreur lors de la création de la tâche");
+      setError(
+        error.response?.data?.message ||
+          "Erreur lors de la création de la tâche"
+      );
     }
   };
 
@@ -171,20 +175,25 @@ const Dashboard: React.FC = () => {
   const handleEditTask = async (taskId: string, updatedData: Partial<Task>) => {
     try {
       console.log("🔄 Modification de la tâche...", { taskId, updatedData });
-      
+
       const response = await axios.put(
         `${API_URL}/tasks/${taskId}`,
         updatedData,
         getAxiosConfig()
       );
-      
+
       const updatedTask = response.data;
-      setTasks(prev => prev.map(task => task._id === taskId ? updatedTask : task));
+      setTasks((prev) =>
+        prev.map((task) => (task._id === taskId ? updatedTask : task))
+      );
       console.log("✅ Tâche modifiée:", updatedTask);
-      
+      fetchTasks();
     } catch (error: any) {
       console.error("❌ Erreur lors de la modification:", error);
-      setError(error.response?.data?.message || "Erreur lors de la modification de la tâche");
+      setError(
+        error.response?.data?.message ||
+          "Erreur lors de la modification de la tâche"
+      );
     }
   };
 
@@ -192,39 +201,47 @@ const Dashboard: React.FC = () => {
   const handleDeleteTask = async (taskId: string) => {
     try {
       console.log("🔄 Suppression de la tâche...", taskId);
-      
+
       await axios.delete(`${API_URL}/tasks/${taskId}`, getAxiosConfig());
-      
-      setTasks(prev => prev.filter(task => task._id !== taskId));
+
+      setTasks((prev) => prev.filter((task) => task._id !== taskId));
       console.log("✅ Tâche supprimée:", taskId);
-      
     } catch (error: any) {
       console.error("❌ Erreur lors de la suppression:", error);
-      setError(error.response?.data?.message || "Erreur lors de la suppression de la tâche");
+      setError(
+        error.response?.data?.message ||
+          "Erreur lors de la suppression de la tâche"
+      );
     }
   };
 
   // ✅ Changer le statut d'une tâche
-  const handleToggleStatus = async (taskId: string, newStatus: Task["status"]) => {
+  const handleToggleStatus = async (
+    taskId: string,
+    newStatus: Task["status"]
+  ) => {
     try {
       console.log("🔄 Changement de statut...", { taskId, newStatus });
-      
+
       const response = await axios.put(
         `${API_URL}/tasks/${taskId}`,
         { status: newStatus },
         getAxiosConfig()
       );
-      
+
       const updatedTask = response.data;
-      setTasks(prev => prev.map(task =>
-        task._id === taskId ? updatedTask : task
-      ));
-      
+      setTasks((prev) =>
+        prev.map((task) => (task._id === taskId ? updatedTask : task))
+      );
+
       console.log("✅ Statut mis à jour:", updatedTask);
-      
+      fetchTasks();
     } catch (error: any) {
       console.error("❌ Erreur lors de la mise à jour du statut:", error);
-      setError(error.response?.data?.message || "Erreur lors de la mise à jour du statut");
+      setError(
+        error.response?.data?.message ||
+          "Erreur lors de la mise à jour du statut"
+      );
     }
   };
 
@@ -240,13 +257,13 @@ const Dashboard: React.FC = () => {
   };
 
   // ✅ Gestion de la création/modification de tâche depuis le formulaire
-  const handleTaskFormSubmit = (taskData: Task | Omit<Task, '_id'>) => {
-    if ('_id' in taskData && taskData._id) {
+  const handleTaskFormSubmit = (taskData: Task | Omit<Task, "_id">) => {
+    if ("_id" in taskData && taskData._id) {
       // Modification d'une tâche existante
       handleEditTask(taskData._id, taskData);
     } else {
       // Création d'une nouvelle tâche
-      handleAddTask(taskData as Omit<Task, '_id'>);
+      handleAddTask(taskData as Omit<Task, "_id">);
     }
     closeTaskForm();
   };
@@ -265,30 +282,28 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="dashboard-container">
-    {/* ✅ Section de bienvenue avec bouton aligné */}
-    <div className="welcome-section">
-      <div className="welcome-content">
-        <h1 className="welcome-title">
-          Bienvenue, {user?.username || user?.email?.split('@')[0] || 'Utilisateur'} ! 👋
-        </h1>
-        <p className="date-subtitle">
-          {new Date().toLocaleDateString('fr-FR', { 
-            weekday: 'long', 
-            day: 'numeric', 
-            month: 'long', 
-            year: 'numeric' 
-          })}
-        </p>
+      {/* ✅ Section de bienvenue avec bouton aligné */}
+      <div className="welcome-section">
+        <div className="welcome-content">
+          <h1 className="welcome-title">
+            Bienvenue,{" "}
+            {user?.username || user?.email?.split("@")[0] || "Utilisateur"} ! 👋
+          </h1>
+          <p className="date-subtitle">
+            {new Date().toLocaleDateString("fr-FR", {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+        </div>
+
+        {/* ✅ Bouton Ajouter une tâche déplacé ici */}
+        <button className="add-task-btn" onClick={() => setShowTaskForm(true)}>
+          ➕ Ajouter une tâche
+        </button>
       </div>
-      
-      {/* ✅ Bouton Ajouter une tâche déplacé ici */}
-      <button 
-        className="add-task-btn"
-        onClick={() => setShowTaskForm(true)}
-      >
-        ➕ Ajouter une tâche
-      </button>
-    </div>
 
       {/* ✅ Gestion des états */}
       {loading && (
@@ -300,10 +315,13 @@ const Dashboard: React.FC = () => {
       {error && (
         <div className="error-section">
           <p className="error-message">❌ {error}</p>
-          <button onClick={() => {
-            setError(null);
-            fetchTasks();
-          }} className="retry-btn">
+          <button
+            onClick={() => {
+              setError(null);
+              fetchTasks();
+            }}
+            className="retry-btn"
+          >
             🔄 Réessayer
           </button>
         </div>
@@ -313,7 +331,7 @@ const Dashboard: React.FC = () => {
       {!loading && (
         <>
           <TaskStats tasks={tasks} />
-          
+
           <TaskFilters
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
@@ -324,12 +342,13 @@ const Dashboard: React.FC = () => {
             selectedDate={selectedDate}
             onDateChange={setSelectedDate}
           />
-          
+
           <RecentsTask
             tasks={filteredTasks}
             onEdit={handleEditClick}
             onDelete={handleDeleteTask}
             onToggleStatus={handleToggleStatus}
+            onResetFilters={resetAllFilters}
           />
         </>
       )}
@@ -349,7 +368,9 @@ const Dashboard: React.FC = () => {
               handleEditTask(updatedTask._id, updatedTask);
               closeTaskForm();
             } else {
-              console.error("❌ Erreur: _id manquant dans la tâche mise à jour");
+              console.error(
+                "❌ Erreur: _id manquant dans la tâche mise à jour"
+              );
             }
           }}
         />

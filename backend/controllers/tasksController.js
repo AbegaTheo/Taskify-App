@@ -175,24 +175,29 @@ export const restoreTask = async (req, res) => {
 
 // ✅ Filtrage des tâches
 export const filterTasks = async (req, res) => {
-  const { priority, status } = req.query;
+  const { priority, status, dueDate, search } = req.query;
 
   try {
     let filter = { user: req.user._id, isArchived: false };
 
-    if (priority) {
-      filter.priority = priority;
-    }
+    if (priority) filter.priority = priority;
+    if (status) filter.status = status;
+    if (dueDate) filter.dueDate = dueDate;
 
-    if (status) {
-      filter.status = status;
+    // 🔍 Recherche par mot-clé dans le titre ou description
+    if (search) {
+      filter.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
+      ];
     }
 
     const tasks = await Tasks.find(filter).sort({ createdAt: -1 });
-    console.log("✅ Tâches filtrées");
     res.status(200).json(tasks);
   } catch (error) {
     console.error("❌ Erreur filterTasks:", error.message);
     res.status(500).json({ message: 'Erreur lors du filtrage des tâches' });
   }
 };
+
+export default { getTasks, createTask, getSingleTask, updateTask, deleteTask, archiveTask, restoreTask, filterTasks };

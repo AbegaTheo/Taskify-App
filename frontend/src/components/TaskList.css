@@ -284,23 +284,23 @@
 }
 
 /* ✅ État vide */
-.empty-state {
+.vide-state {
   text-align: center;
   padding: 3rem 2rem;
 }
 
-.empty-icon {
+.vide-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
 
-.empty-state h3 {
+.vide-state h3 {
   margin: 0 0 0.5rem 0;
   color: #c1cadc;
   font-size: 1.25rem;
 }
 
-.empty-state p {
+.vide-state p {
   margin: 0;
   font-size: 1rem;
   color: #c1cadc;
